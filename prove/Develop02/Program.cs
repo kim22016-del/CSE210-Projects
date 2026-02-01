@@ -49,7 +49,7 @@ class Program
     static void AddEntry(Journal journal, Prompt prompt)
     {
         Console.WriteLine("Do you have a enough time to write journal? (y/n)"); //I added check-in if user do not have enough time to write a journal.
-        string timeQuestionChoice = Console.ReadLine();                         //It helps user still record.
+        string timeQuestionChoice = Console.ReadLine();                         //It helps user keep recording something.
         if (timeQuestionChoice == "n")
         {
             Console.Write("Did you smile today? (yes/no): ");

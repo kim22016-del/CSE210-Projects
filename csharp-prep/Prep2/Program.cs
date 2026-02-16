@@ -4,41 +4,40 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.Write("Please enter your percentage of grade. ");
+        Console.Write("What is your grade percentage? ");
         string grade = Console.ReadLine();
-        int number = int.Parse(grade);
+        int intGrade = int.Parse(grade);
+        string letter ="";
 
-        string score = "none";
-
-        if (number > 90 || number == 90)
+        if (intGrade >= 90)
         {
-            score = "A";
+            letter = "A";
         }
-        else if (number > 80 || number == 80)
+        else if (intGrade >= 80)
         {
-            score = "B";
+            letter = "B";
         }
-        else if (number > 70 || number == 70)
+        else if (intGrade >= 70)
         {
-            score = "C";
+            letter = "C";
         }
-        else if (number > 60 || number == 60)
+        else if (intGrade >= 60)
         {
-            score = "D";
+            letter = "D";
         }
         else
         {
-            score = "F";
+            letter = "F";
         }
-        Console.WriteLine($"Grade: {score}");
-
-        if (number > 60 || number == 60)
+        Console.Write($"Grade:{letter} ");
+        
+        if (intGrade >= 70)
         {
-            Console.WriteLine("Congratulation! you passed the test!");
+            Console.WriteLine("//You passed the test!");
         }
         else
         {
-            Console.WriteLine("sorry you failed the test.");
+            Console.WriteLine("//Sorry you didn't pass the test!");
         }
     }
 }

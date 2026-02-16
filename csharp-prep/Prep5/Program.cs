@@ -1,57 +1,49 @@
 using System;
+using System.Diagnostics;
 
 class Program
 {
-    static void Main(string[] args)
-    {
-        DisplayWelcome();
-
-        string userName = PromptUserName();
-
-        int favoriteNumber = PromptUserNumber();
-
-        int birthYear;
-        PromptUserBirthYear(out birthYear);
-
-        int squaredNumber = SquareNumber(favoriteNumber);
-
-        DisplayResult(userName, squaredNumber, birthYear);
-    }
-
     static void DisplayWelcome()
     {
-        Console.WriteLine("Welcome to the Program!");
+        Console.Write("Welcome to the program!");
     }
 
     static string PromptUserName()
     {
         Console.Write("Please enter your name: ");
-        return Console.ReadLine();
+        string userName = Console.ReadLine();
+        return userName;
     }
-
     static int PromptUserNumber()
     {
         Console.Write("Please enter your favorite number: ");
-        return int.Parse(Console.ReadLine());
+        int userNumber = int.Parse(Console.ReadLine());
+        return userNumber;
     }
 
-    static void PromptUserBirthYear(out int year)
+    static void PromtUserBirthYear(out int userbirthYear)
     {
         Console.Write("Please enter the year you were born: ");
-        year = int.Parse(Console.ReadLine());
+        userbirthYear = int.Parse(Console.ReadLine());
     }
-
-    static int SquareNumber(int num)
+    static int SquareNumber(int userNumber)
     {
-        return num * num;
+        int square = userNumber * userNumber;
+        return square;
     }
-
-    static void DisplayResult(string name, int squaredNumber, int birthYear)
+    static void DisplayResult(string userName, int userbirthYear, int square)
     {
-        Console.WriteLine($"{name}, the square of your number is {squaredNumber}");
-
-        int currentYear = DateTime.Now.Year;
-        int age = currentYear - birthYear;
-        Console.WriteLine($"{name}, you will turn {age} this year.");
+        Console.WriteLine($"{userName}, the square of your number is {square}");
+        Console.WriteLine($"{userName}, you will turn {2026 - userbirthYear} this year");
     }
+    static void Main()
+    {
+        DisplayWelcome();
+        string name = PromptUserName();
+        int number = PromptUserNumber();
+        PromtUserBirthYear(out int userbirthYear);
+        int squared = SquareNumber(number);
+        DisplayResult(name, userbirthYear, squared);
+    }
+
 }

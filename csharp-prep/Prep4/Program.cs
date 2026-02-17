@@ -21,9 +21,9 @@ class Program
         } while (number != 0);
 
         int sum = 0;
-        for (int i = 0; i < numbers.Count; i++)
+        for (int i = 0; i < numbers.Count; i++) // .count 를 써서 리스트 안에 요소의 개수를 알아낸다.
         {
-            sum+=numbers[i];
+            sum+=numbers[i]; // numbers 라는 리스트에 i번째 있는 요소를 합친다.
         }
         double avg = (double)sum / numbers.Count;
         int highestNumber = 0;
@@ -31,7 +31,7 @@ class Program
         {
             if (highestNumber < numbers[i])
             {
-                highestNumber = numbers[i];
+                highestNumber = numbers[i]; // numbers 리스트에 있는 i 번째 요소를 비교한뒤, 숫자가 최댓값보다 크다면, i번째 숫자가 최댓값으로 변경을 한다.
             }
         }
         double smallestNumber = highestNumber;

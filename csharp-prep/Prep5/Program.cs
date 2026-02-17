@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-class Program
+class Program // 여러개의 함수가 서로 상호작용하도록 코드를 설계함.
 {
     static void DisplayWelcome()
     {

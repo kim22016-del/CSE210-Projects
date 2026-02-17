@@ -17,15 +17,48 @@ class Program
             userNum = int.Parse(Console.ReadLine());
             if (userNum == 1 )
             {
-                string randomPrompt = thePrompt.GetRandomPrompt();
-                Console.WriteLine(randomPrompt);
-                string response = Console.ReadLine();
-                Entry newEntry = new Entry();
-                newEntry._date = DateTime.Now.ToShortDateString();
-                newEntry._promptText = randomPrompt;
-                newEntry._entryText = response;
 
-                theJournal.AddEntry(newEntry);
+                Console.Write("Do you have a enough time to write journal? (y/n): "); //I added check-in if user do not have enough time to write a journal.
+                string quickJournal = Console.ReadLine().ToLower();
+
+                string response = "";
+                string promptToSave = "";
+
+                if (quickJournal == "y")
+                {
+                    promptToSave = thePrompt.GetRandomPrompt();
+                    Console.WriteLine(promptToSave);
+                    response = Console.ReadLine();
+
+                }
+                else if (quickJournal == "n")
+                {
+                    Console.WriteLine("Quick Check-in mode: ");
+
+                    Console.Write("Did you smile today? (y/n): ");
+                    string smile = Console.ReadLine();
+
+                    Console.Write("Did you pray today? (y/n): ");
+                    string pray = Console.ReadLine();
+
+                    response = $"[Smiled: {smile}, Prated: {pray}]";
+                }
+                else
+                {
+                    Console.WriteLine("Sorry Enter again");
+                }
+                if (response != "")
+                {
+                    Entry newEntry = new Entry();
+                    newEntry._date = DateTime.Now.ToShortDateString();
+                    newEntry._promptText = promptToSave;
+                    newEntry._entryText = response;
+
+                    theJournal.AddEntry(newEntry);
+                }
+                
+
+
             }
             else if (userNum == 2)
             {
@@ -38,7 +71,7 @@ class Program
 
                 theJournal.LoadFromFile(fileName);
                 Console.WriteLine("file loaded");
-                
+
                 theJournal.DisplayAll();
             }
             else if (userNum == 4)

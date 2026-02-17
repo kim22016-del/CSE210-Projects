@@ -1,46 +1,58 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 public class Journal
 {
-    private List<Entry> _entries = new List<Entry>();
-
-    public void AddEntry(Entry entry)
+    public List<Entry> _entries = new List<Entry>();
+    public void AddEntry(Entry newEntry)
     {
-        _entries.Add(entry);
+        _entries.Add(newEntry);
     }
 
-    public List<Entry> GetEntries()
+    public void DisplayAll()
     {
-        return _entries;
-    }
-
-    public void SaveToFile(string filename)
-    {
-        using (StreamWriter writer = new StreamWriter(filename))
+        if (_entries.Count == 0)
         {
-            foreach (var entry in _entries)
-            {
-                writer.WriteLine($"{entry.GetDate()},{entry.GetPrompt()},{entry.GetResponse()}");
-            }
+            Console.WriteLine("The journal is empty.");
+            return;
+        }
+
+        foreach (Entry entry in _entries)
+        {
+            entry.Display();
+
+            Console.WriteLine();
         }
     }
 
+    public void SaveToFile(string file)
+    {
+        using (StreamWriter outputFile = new StreamWriter(file))
+        {
+            foreach (Entry entry in _entries)
+            {
+                outputFile.WriteLine($"{entry._date}|{entry._promptText}|{entry._entryText}");
+            }
+        }
+        Console.WriteLine("File Saved");
+    }
 
-    public void LoadFromFile(string filename)
+    public void LoadFromFile(string file)
     {
         _entries.Clear();
-        if (File.Exists(filename))
+        string[] lines = System.IO.File.ReadAllLines(file);
+
+        foreach (string line in lines)
         {
-            foreach (var line in File.ReadAllLines(filename))
-            {
-                var parts = line.Split(',', 3);
-                if (parts.Length == 3)
-                {
-                    _entries.Add(new Entry(parts[1], parts[2], parts[0]));
-                }
-            }
+            string [] parts = line.Split("|");
+
+            Entry newEntry = new Entry();
+            newEntry._date = parts[0];
+            newEntry._promptText = parts[1];
+            newEntry._entryText = parts[2];
+
+            _entries.Add(newEntry);
         }
     }
 

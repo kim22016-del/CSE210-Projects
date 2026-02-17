@@ -1,113 +1,56 @@
 using System;
+using System.Runtime.CompilerServices;
 
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        Journal journal = new Journal();
-        Prompt prompt = new Prompt();
-        int repeat = 1;
-
-        while (repeat == 1)
+        Journal theJournal = new Journal();
+        Prompt thePrompt = new Prompt();
+        Console.WriteLine("Welcome the the journal Program!");
+        int userNum;
+        do
         {
-            Console.WriteLine("\nJournal Menu:");
-            Console.WriteLine("1. Write");
-            Console.WriteLine("2. Display");
-            Console.WriteLine("3. Save");
-            Console.WriteLine("4. Load");
-            Console.WriteLine("5. Exit");
-            Console.Write("Choose an option: ");
-            string choice = Console.ReadLine();
 
-            if (choice == "1")
+            Console.WriteLine("Please select one tof the following choices\n1. Write\n2. Display\n3. Load\n4. Save\n5. Quit");
+            Console.Write("What would you like to do?: ");
+            userNum = int.Parse(Console.ReadLine());
+            if (userNum == 1 )
             {
-                AddEntry(journal, prompt);
+                string randomPrompt = thePrompt.GetRandomPrompt();
+                Console.WriteLine(randomPrompt);
+                string response = Console.ReadLine();
+                Entry newEntry = new Entry();
+                newEntry._date = DateTime.Now.ToShortDateString();
+                newEntry._promptText = randomPrompt;
+                newEntry._entryText = response;
+
+                theJournal.AddEntry(newEntry);
             }
-            else if (choice == "2")
+            else if (userNum == 2)
             {
-                ShowEntries(journal);
+                theJournal.DisplayAll();
             }
-            else if (choice == "3")
+            else if (userNum == 3)
             {
-                SaveEntries(journal);
+                Console.Write("Please enter your file name: ");
+                string fileName = Console.ReadLine();
+
+                theJournal.LoadFromFile(fileName);
+                Console.WriteLine("file loaded");
+                
+                theJournal.DisplayAll();
             }
-            else if (choice == "4")
+            else if (userNum == 4)
             {
-                LoadEntries(journal);
+                Console.WriteLine("Please create file name: ");
+                string fileName = Console.ReadLine();
+
+                theJournal.SaveToFile(fileName);
             }
-            else if (choice == "5")
-            {
-                repeat = 0;
-            }
-            else
-            {
-                Console.WriteLine("Wrong choice. Try again.");
-            }
-        }
-    }
+        } while (userNum != 5);
 
-    static void AddEntry(Journal journal, Prompt prompt)
-    {
-        Console.WriteLine("Do you have a enough time to write journal? (y/n)"); //I added check-in if user do not have enough time to write a journal.
-        string timeQuestionChoice = Console.ReadLine();                         //It helps user keep recording something.
-        if (timeQuestionChoice == "n")
-        {
-            Console.Write("Did you smile today? (yes/no): ");
-            string smile = Console.ReadLine();
+        Console.WriteLine("Good Bye!");
 
-            Console.Write("Did you pray today? (yes/no)");
-            string pray = Console.ReadLine();
-
-            string response = $"Smiled={smile}, pray={pray}";
-            string date = DateTime.Now.ToShortDateString();
-            Entry entry = new Entry("Quick Check-In", response, date);
-            journal.AddEntry(entry);
-
-        }
-
-        else
-        {
-            string question = prompt.GetRandomPrompt();
-            Console.WriteLine(question);
-            string response = Console.ReadLine();
-            string date = DateTime.Now.ToShortDateString();
-
-            Entry entry = new Entry(question, response, date);
-            journal.AddEntry(entry);
-            Console.WriteLine("added!");
-        }
-
-    }
-
-    static void ShowEntries(Journal journal)
-    {
-        var entries = journal.GetEntries();
-        if (entries.Count == 0)
-        {
-            Console.WriteLine("No entries found.");
-            return;
-        }
-
-        Console.WriteLine("\nYour Journal Entries:");
-        foreach (var entry in entries)
-        {
-            Console.WriteLine(entry.ToString());
-        }
-    }
-
-    static void SaveEntries(Journal journal)
-    {
-        Console.Write("Enter filename to save: ");
-        string filename = Console.ReadLine();
-        journal.SaveToFile(filename);
-        Console.WriteLine("saved!");
-    }
-
-    static void LoadEntries(Journal journal)
-    {
-        Console.Write("Enter filename to load: ");
-        string filename = Console.ReadLine();
-        journal.LoadFromFile(filename);
-        Console.WriteLine("loaded!");
     }
 }

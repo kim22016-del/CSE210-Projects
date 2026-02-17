@@ -2,24 +2,13 @@ using System;
 
 public class Entry
 {
-    private string _prompt;
-    private string _response;
-    private string _date;
+    public string _date;
+    public string _promptText;
+    public string _entryText;
 
-    public Entry(string prompt, string response, string date)
+    public void Display()
     {
-        _prompt = prompt;
-        _response = response;
-        _date = date;
+        Console.WriteLine($"{_date} {_promptText} {_entryText}");
     }
-
-    public override string ToString()
-    {
-        return $"{_date} - {_prompt}: {_response}";
-    }
-
-    public string GetPrompt() { return _prompt; }
-    public string GetResponse() { return _response; }
-    public string GetDate() { return _date; }
 
 }

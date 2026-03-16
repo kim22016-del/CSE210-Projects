@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.IO;
 
 public class Activity
 {
     protected string _description;
     protected int _actDuration;
+    protected string _activityName;
 
     public Activity()
     {
         _description = "";
         _actDuration = 0;
+        _activityName = "Activity";
     }
 
     public void Display(bool isStart)
@@ -18,7 +21,7 @@ public class Activity
         if (isStart)
         {
             Console.Clear();
-            Console.WriteLine("Welcome to the Activity.");
+            Console.WriteLine($"Welcome to the {_activityName}.");
             Console.WriteLine();
             Console.WriteLine(_description);
             Console.WriteLine();
@@ -31,7 +34,8 @@ public class Activity
         {
             Console.WriteLine("\nWell done!!");
             Animate();
-            Console.WriteLine($"You have completed another {_actDuration} seconds of the Activity.");
+            Console.WriteLine($"You have completed another {_actDuration} seconds of the {_activityName}");
+            LogActivity();
             Animate();
         }
     }
@@ -62,5 +66,12 @@ public class Activity
             Console.Write("\b \b");
         }
         Console.WriteLine();
+    }
+
+    private void LogActivity()
+    {
+        string logEntry = $"{DateTime.Now}: Completed {_activityName} for {_actDuration} seconds.\n";
+        File.AppendAllText("log.txt", logEntry);
+        Console.WriteLine("(Your progress has been saved to log.txt)");
     }
 }

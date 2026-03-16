@@ -2,7 +2,7 @@ using System;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main(string[] args) //Added a feature to record and save all session history to a file, allowing users to track their progress over time.
     {
         string choice = "";
         while (choice != "4")

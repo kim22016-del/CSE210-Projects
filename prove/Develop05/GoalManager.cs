@@ -68,6 +68,7 @@ public class GoalManager
         Console.WriteLine("  1. Simple Goal");
         Console.WriteLine("  2. Eternal Goal");
         Console.WriteLine("  3. Checklist Goal");
+        Console.WriteLine("  4. Negative Goal");
         Console.Write("Which type of goal would you like to create? ");
         string goalType = Console.ReadLine();
 
@@ -94,6 +95,10 @@ public class GoalManager
             int bonus = int.Parse(Console.ReadLine());
             _goals.Add(new Checklist(name, description, points, target, bonus));
         }
+        else if (goalType == "4")
+        {
+            _goals.Add(new Negative(name, description, points));
+        }
     }
 
 public void RecordEvent()
@@ -105,7 +110,7 @@ public void RecordEvent()
     int pointsEarned = _goals[goalIndex].RecordEvent();
     _score += pointsEarned;
 
-    Console.WriteLine($"Congratulations! You have earned {pointsEarned} points!");
+    Console.WriteLine($"You have earned {pointsEarned} points!");
     Console.WriteLine($"You now have {_score} points.");
 }
 
@@ -148,7 +153,7 @@ public void LoadGoals()
         string details = parts[1];
         string[] data = details.Split(',');
 
-        if (type == "SimpleGoal")
+        if (type == "Simple")
         {
             Simple goal = new Simple(data[0], data[1], data[2]);
             if (bool.Parse(data[3]))
@@ -157,11 +162,11 @@ public void LoadGoals()
             }
             _goals.Add(goal);
         }
-        else if (type == "EternalGoal")
+        else if (type == "Eternal")
         {
             _goals.Add(new Eternal(data[0], data[1], data[2]));
         }
-        else if (type == "ChecklistGoal")
+        else if (type == "Checklist")
         {
             int bonus = int.Parse(data[3]);
             int target = int.Parse(data[4]);

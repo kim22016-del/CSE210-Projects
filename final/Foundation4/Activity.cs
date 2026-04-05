@@ -1,0 +1,25 @@
+using System;
+
+public abstract class Activity
+{
+    private string _date;
+    private int _minutes;
+    private string _name;
+
+    public Activity(string name, string date, int minutes)
+    {
+        _name = name;
+        _date = date;
+        _minutes = minutes;
+    }
+    public abstract double GetDistance();
+    public abstract double GetSpeed();
+    public abstract double GetPace();
+
+    public string GetSummary()
+    {
+        return $"{_name} : {_date} ({_minutes} min) - Distance: {GetDistance():0.0} km, Speed: {GetSpeed():0.0} kph, Pace: {GetPace():0.0} min per km";
+    }
+
+    protected int GetMinutes() => _minutes;
+}
